@@ -130,6 +130,13 @@ function £() {
   fasd_cd -d $PROJECTS/$1
 }
 
+# bind keys that were broken for some reason
+bindkey '^[[1~' beginning-of-line # Home
+bindkey "^[[4~" end-of-line # End
+bindkey "^[[3~" delete-char # Delete
+
+bindkey "\C-k" kill-whole-line
+
 # According to docs, this must come right at the end
 source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$ZDOTDIR/zsh-history-substring-search/zsh-history-substring-search.zsh"
