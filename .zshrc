@@ -121,3 +121,7 @@ alias c=colored_cat
 
 # According to docs, this must come right at the end
 source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$ZDOTDIR/zsh-history-substring-search/zsh-history-substring-search.zsh"
+# bind up/down to search history with substring (replace default behaviour)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
