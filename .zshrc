@@ -58,6 +58,7 @@ export NVM_DIR="$HOME/.nvm"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/dev
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 . ~/.local/bin/virtualenvwrapper.sh
 
 
