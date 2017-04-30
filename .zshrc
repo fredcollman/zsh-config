@@ -1,3 +1,6 @@
+# configurable
+export PROJECTS="$HOME/dev"
+
 ZSH_CACHE="$HOME/.zsh-cache"
 if [ ! -d "$ZSH_CACHE" ]; then
   mkdir -p "$ZSH_CACHE"
@@ -118,6 +121,13 @@ function colored_cat() {
   pygmentize -g -O style=monokai,linenos=1 $* | maybe-page.sh
 }
 alias c=colored_cat
+
+# quick switching to projects
+hash -d p="$PROJECTS"
+
+function £() {
+  fasd_cd -d $PROJECTS/$1
+}
 
 # According to docs, this must come right at the end
 source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
