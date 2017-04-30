@@ -118,3 +118,6 @@ function colored_cat() {
   pygmentize -g -O style=monokai,linenos=1 $* | maybe-page.sh
 }
 alias c=colored_cat
+
+# According to docs, this must come right at the end
+source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
