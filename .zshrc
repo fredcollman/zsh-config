@@ -1,3 +1,8 @@
+ZSH_CACHE="$HOME/.zsh-cache"
+if [ ! -d "$ZSH_CACHE" ]; then
+  mkdir -p "$ZSH_CACHE"
+fi
+
 # Set custom prompt
 setopt PROMPT_SUBST
 autoload -U promptinit
@@ -91,3 +96,18 @@ function grepp() {
 }
 
 alias "?"=grepp
+
+# initialise fasd
+if [ $commands[fasd] ]; then # check if fasd is installed
+  fasd_cache="$ZSH_CACHE/fasd-init-cache"
+  if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+    fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
+  fi
+  source "$fasd_cache"
+  unset fasd_cache
+
+  alias 2='fasd_cd -d'
+  alias j='fasd_cd -d -i'
+  alias o='fasd -a -e xdg-open'
+  alias e='fasd -a -i -e subl'
+fi
