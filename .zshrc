@@ -31,9 +31,6 @@ bindkey '\C-x\C-e' edit-command-line
 # Narrow that down to allow easier skipping through words via M-f and M-b.
 export WORDCHARS='*?[]~&;!$%^<>'
 
-# Highlight search results in ack.
-export ACK_COLOR_MATCH='red'
-
 # Aliases
 function lack() {
     # The +k clears the screen (it tries to scroll up but there's nowhere to
@@ -83,3 +80,14 @@ alias yd="yarn add --dev"
 # ls: make "other-writable" directories bold light blue on dark grey
 export LS_COLORS="ow=01;94;100"
 alias ls="ls -l --color=auto --group-directories-first"
+
+function keepdoing() {
+  watchmedo shell-command --patterns="*.py;*.sh;*file" --ignore-directories --recursive --drop --command="$@"
+}
+alias kd=keepdoing
+
+function grepp() {
+  clear && ag --group -A 2 --smart-case --pager="maybe-page.sh" $*
+}
+
+alias "?"=grepp
