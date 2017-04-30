@@ -12,6 +12,8 @@ prompt fred
 # Initialize completion
 autoload -U compinit
 compinit
+# enable completion menu
+zstyle ':completion:*' menu select
 
 # Add paths
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
@@ -37,11 +39,6 @@ bindkey '\C-x\C-e' edit-command-line
 export WORDCHARS='*?[]~&;!$%^<>'
 
 # Aliases
-function lack() {
-    # The +k clears the screen (it tries to scroll up but there's nowhere to
-    # go)
-    ack --group --color $* | less -r +k
-}
 function mcd() { mkdir -p $1 && cd $1 }
 function cdf() { cd *$1*/ } # stolen from @topfunky
 
@@ -60,6 +57,25 @@ export PROJECT_HOME=$HOME/dev
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 . ~/.local/bin/virtualenvwrapper.sh
 
+
+# ruby (rvm)
+# export RVM_DIR="$HOME/.rvm"
+# [ -s "$RVM_DIR/scripts/rvm" ] && . "$RVM_DIR/scripts/rvm"
+
+# initialise fasd
+if [ $commands[fasd] ]; then # check if fasd is installed
+  fasd_cache="$ZSH_CACHE/fasd-init-cache"
+  if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+    fasd --init auto >| "$fasd_cache"
+  fi
+  source "$fasd_cache"
+  unset fasd_cache
+
+  alias 2='fasd_cd -d'
+  alias j='fasd_cd -d -i'
+  alias o='fasd -a -e xdg-open'
+  alias e='fasd -a -i -e subl'
+fi
 
 # Aliases
 function up() {
@@ -97,17 +113,8 @@ function grepp() {
 
 alias "?"=grepp
 
-# initialise fasd
-if [ $commands[fasd] ]; then # check if fasd is installed
-  fasd_cache="$ZSH_CACHE/fasd-init-cache"
-  if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-    fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
-  fi
-  source "$fasd_cache"
-  unset fasd_cache
-
-  alias 2='fasd_cd -d'
-  alias j='fasd_cd -d -i'
-  alias o='fasd -a -e xdg-open'
-  alias e='fasd -a -i -e subl'
-fi
+# fancy cat
+function colored_cat() {
+  pygmentize -g -O style=monokai,linenos=1 $* | maybe-page.sh
+}
+alias c=colored_cat
