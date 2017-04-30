@@ -116,8 +116,8 @@ prompt_fred_setup() {
 
   PROMPT="%(?..$pc[rc]$warning  exited %1v$pc[reset])
 "
-  PROMPT+=":$pc[shortpath]%1~$pc[reset]"
-    PROMPT+="($pc[scm_branch]\$(prompt_wunjo_scm_branch)$pc[reset])"
+  PROMPT+="$pc[shortpath]%1~$pc[reset]"
+  PROMPT+=" ($pc[scm_branch]\$(prompt_wunjo_scm_branch)$pc[reset])"
   PROMPT+=" $pc[#]\$$pc[reset] "
 
   # location: user@hostname
@@ -251,7 +251,7 @@ prompt_wunjo_scm_branch() {
   local -A pc
   pc=(${(kv)wunjo_prompt_colors})
 
-  echo -n "$pc[punc]$pc[scm_branch]$(zgit_head)"
+  echo -n "$pc[punc]$pc[scm_branch]$(zgit_head)" | branch-strip.sh
 
   if zgit_inworktree; then
     # there are staged changes
