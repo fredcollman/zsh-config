@@ -143,3 +143,5 @@ source "$ZDOTDIR/zsh-history-substring-search/zsh-history-substring-search.zsh"
 # bind up/down to search history with substring (replace default behaviour)
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
