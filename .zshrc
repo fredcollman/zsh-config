@@ -1,3 +1,4 @@
+fpath=($ZDOTDIR/completions $fpath)
 # configurable
 export PROJECTS="$HOME/dev"
 
@@ -57,7 +58,7 @@ export NVM_DIR="$HOME/.nvm"
 # python (virtualenvwrapper)
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/dev
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 . ~/.local/bin/virtualenvwrapper.sh
 
@@ -78,7 +79,7 @@ if [ $commands[fasd] ]; then # check if fasd is installed
   alias 2='fasd_cd -d'
   alias j='fasd_cd -d -i'
   alias o='fasd -a -e xdg-open'
-  alias e='fasd -a -i -e subl'
+  alias e='fasd -a -i -e vim'
 fi
 
 # Aliases
@@ -91,11 +92,11 @@ function up() {
 }
 
 alias x=exit
-alias g=git
-alias "g+"="git add --all && git staged"
-alias "g-"="git reset HEAD --"
-alias s="git status || ls -t"
-alias l="git ga"
+alias g=hub
+alias "g+"="g add --all && g staged"
+alias "g-"="g reset HEAD --"
+alias s="g status || ls -t"
+alias l="g ga"
 
 alias h=heroku
 alias y=yarn
