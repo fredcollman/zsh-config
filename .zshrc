@@ -16,6 +16,7 @@ prompt fred
 # Initialize completion
 autoload -U compinit
 compinit
+
 # enable completion menu
 zstyle ':completion:*' menu select
 
@@ -62,7 +63,6 @@ export PROJECT_HOME=$HOME/dev
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 . ~/.local/bin/virtualenvwrapper.sh
 
-
 # ruby (rvm)
 # export RVM_DIR="$HOME/.rvm"
 # [ -s "$RVM_DIR/scripts/rvm" ] && . "$RVM_DIR/scripts/rvm"
@@ -99,6 +99,7 @@ alias s="g status || ls -t"
 alias l="g ga"
 
 alias h=heroku
+alias hl="heroku local:run --"
 alias y=yarn
 alias "y+"="yarn add"
 alias yd="yarn add --dev"
@@ -108,9 +109,15 @@ export LS_COLORS="ow=01;94;100"
 alias ls="ls -l --color=auto --group-directories-first"
 
 function keepdoing() {
+  eval $@
   watchmedo shell-command --patterns="*.py;*.sh;*file" --ignore-directories --recursive --drop --command="$@"
 }
 alias kd=keepdoing
+
+alias ft="heroku local functest"
+alias ut="scripts/run_unit_tests.sh"
+alias t="heroku local test"
+alias d=docker
 
 function grepp() {
   clear && ag --group -A 2 --smart-case --pager="maybe-page.sh" $*
