@@ -114,10 +114,15 @@ function keepdoing() {
 }
 alias kd=keepdoing
 
-alias ft="heroku local functest"
+alias ft="scripts/run_functional_tests.sh"
 alias ut="scripts/run_unit_tests.sh"
-alias t="heroku local test"
-alias d=docker
+
+if [ $commands[docker] ]; then # check if docker is installed
+  alias d=docker
+
+  alias db="docker build -t yobota/$(basename `pwd`) ."
+  alias dr="docker run --env-file .env -v `pwd`:/app yobota/$(basename `pwd`)"
+fi
 
 function grepp() {
   clear && ag --group -A 2 --smart-case --pager="maybe-page.sh" $*
