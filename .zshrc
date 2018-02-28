@@ -124,6 +124,10 @@ if [ $commands[docker] ]; then # check if docker is installed
   alias dr="docker run --env-file .env -v `pwd`:/app yobota/$(basename `pwd`)"
 fi
 
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
+
 function grepp() {
   clear && ag --group -A 2 --smart-case --pager="maybe-page.sh" $*
 }
