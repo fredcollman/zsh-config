@@ -147,6 +147,10 @@ function £() {
   fasd_cd -d $PROJECTS/$1
 }
 
+function take() {
+  mkdir -p "$1" && cd "$1"
+}
+
 # bind keys that were broken for some reason
 bindkey '^[[1~' beginning-of-line # Home
 bindkey "^[[4~" end-of-line # End
