@@ -125,8 +125,14 @@ alias ut="scripts/run_unit_tests.sh"
 if [ $commands[docker] ]; then # check if docker is installed
   alias d=docker
 
-  alias db="docker build -t yobota/$(basename `pwd`) ."
-  alias dr="docker run --env-file .env -v `pwd`:/app yobota/$(basename `pwd`)"
+
+  function db() {
+    docker build -t yobota/$(basename `pwd`) "$@" .
+  }
+
+  function dr() {
+    docker run --env-file .env -v `pwd`:/app "$@" yobota/$(basename `pwd`)
+  }
 fi
 
 if [ $commands[kubectl] ]; then
@@ -167,3 +173,5 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(direnv hook zsh)"
