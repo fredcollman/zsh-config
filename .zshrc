@@ -23,6 +23,9 @@ zstyle ':completion:*' menu select
 # Add paths
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
+if [ -d "$PROJECTS/dotfiles/bin" ]; then
+  PATH="$PATH:$PROJECTS/dotfiles/bin"
+fi
 
 # Nicer history
 export HISTSIZE=100000
@@ -55,11 +58,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 # [ -r $NVM_DIR/bash_completion ] && . $NVM_DIR/bash_completion
 
+# homebrew and installed apps
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # python (virtualenvwrapper)
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/dev
-# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 . ~/.local/bin/virtualenvwrapper.sh
 
@@ -120,8 +125,14 @@ alias ut="scripts/run_unit_tests.sh"
 if [ $commands[docker] ]; then # check if docker is installed
   alias d=docker
 
-  alias db="docker build -t yobota/$(basename `pwd`) ."
-  alias dr="docker run --env-file .env -v `pwd`:/app yobota/$(basename `pwd`)"
+
+  function db() {
+    docker build -t yobota/$(basename `pwd`) "$@" .
+  }
+
+  function dr() {
+    docker run --env-file .env -v `pwd`:/app "$@" yobota/$(basename `pwd`)
+  }
 fi
 
 if [ $commands[kubectl] ]; then
@@ -162,3 +173,5 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(direnv hook zsh)"
