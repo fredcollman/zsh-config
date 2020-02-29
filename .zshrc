@@ -110,7 +110,7 @@ alias ls="ls -l --color=auto --group-directories-first"
 
 function keepdoing() {
   eval $@
-  watchmedo shell-command --patterns="*.py;*.sh;*file" --ignore-directories --recursive --drop --command="$@"
+  watchmedo shell-command --patterns="*.py;*.sh;*.js;*file" --ignore-directories --recursive --drop --command="$@"
 }
 alias kd=keepdoing
 
